@@ -109,7 +109,7 @@ namespace ÄlytaloWpfJM
             txtTime.Text = time;
         }
 
-
+        //
 
         //toiminnallisuuksien asettaminen
         private void btnOlohuonePois_Click(object sender, RoutedEventArgs e)
