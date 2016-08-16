@@ -34,6 +34,7 @@ namespace ÄlytaloWpfJM
         public DateTime date1 = new DateTime(2015, 11, 15, 17, 12, 0);
         //public DispatcherTimer SaunaTimer = new System.Windows.Threading.
         public Timer t = new Timer();
+        public MediaElement MediaElement = new MediaElement();
 
         public MainWindow()
         {
@@ -63,7 +64,14 @@ namespace ÄlytaloWpfJM
             //start timer when form loads
             t.Start(); //this will use t_Tick() method
 
+            
+           
+
         }
+        /*void mediaPlay (object sender, EventArgs e)
+        {
+            saaTanaan.Play();
+        }*/
         // timer eventhandler
         private void t_Tick(object sender, EventArgs e)
         {
