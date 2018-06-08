@@ -16,7 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
+using System.Threading;
 
 namespace ÄlytaloWpfJM
 {
@@ -33,7 +34,20 @@ namespace ÄlytaloWpfJM
         public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
         public DateTime date1 = new DateTime(2015, 11, 15, 17, 12, 0);
         //public DispatcherTimer SaunaTimer = new System.Windows.Threading.
-        public Timer t = new Timer();
+
+        private int j = 17;
+
+        public DispatcherTimer asteTimer = new DispatcherTimer(); // Tick 
+        public DispatcherTimer asteTimer2 = new DispatcherTimer();
+        public DispatcherTimer asteTimer3 = new DispatcherTimer();
+
+        public DispatcherTimer SaunaTimer = new DispatcherTimer();
+        public DispatcherTimer SaunaSammutusTimer = new DispatcherTimer();
+
+        DispatcherTimer dtClockTime = new DispatcherTimer();
+
+
+
         public MediaElement MediaElement = new MediaElement();
 
         public MainWindow()
@@ -50,22 +64,41 @@ namespace ÄlytaloWpfJM
 
             HouseSauna.SaunaPäällä(0);
             txtSaunaTila.Text = "";
-            
+
 
             Astemerkki = Convert.ToChar(176);
             txtLämpötila.Text = "20" + Astemerkki;
             txtTavoitelämpötila.Text = "";
 
-            //timer interval
-            t.Interval = 1000;
+            #region saunan lämpötila tikit
+            asteTimer.Tick += Lämpenee_Tick;
+            asteTimer.Interval = new TimeSpan(0, 0, 1); //Tikki käy sekunnin välein
 
-            t.Tick += new EventHandler(this.t_Tick);
+            asteTimer2.Tick += Lämpenee2_Tick;
+            asteTimer2.Interval = new TimeSpan(0, 0, 1);
 
-            //start timer when form loads
-            t.Start(); //this will use t_Tick() method
+            asteTimer3.Tick += Lämpenee3_Tick;
+            asteTimer.Interval = new TimeSpan(0, 0, 1);
+            #endregion
 
-            
-           
+            // Saunan Ajastin
+            SaunaTimer.Tick += SaunanLampo_Tick;
+            SaunaTimer.Interval = new TimeSpan(0, 0, 1);
+
+            // Saunan ajastin sammutus
+            SaunaSammutusTimer.Tick += SaunanSammutus_Tick;
+            SaunaSammutusTimer.Interval = new TimeSpan(0, 0, 1);
+
+            //Kellon asetus
+            dtClockTime.Interval = new TimeSpan(0, 0, 1); //in Hour, Minutes, Second.
+            dtClockTime.Tick += dtClockTime_Tick;
+
+            dtClockTime.Start();
+
+            //Video
+            myMedia.Volume = 100;
+            myMedia.Play();
+
 
         }
         /*void mediaPlay (object sender, EventArgs e)
@@ -73,53 +106,14 @@ namespace ÄlytaloWpfJM
             saaTanaan.Play();
         }*/
         // timer eventhandler
-        private void t_Tick(object sender, EventArgs e)
-        {
-            //get current time
-            int hh = DateTime.Now.Hour;
-            int mm = DateTime.Now.Minute;
-            int ss = DateTime.Now.Second;
 
-            //time
-            string time = "";
-
-            //padding leading zero
-            if (hh < 10)
-            {
-                time += "0" + hh;
-            }
-            else
-            {
-                time += hh;
-            }
-            time += ":";
-
-            if (mm < 10)
-            {
-                time += "0" + mm;
-            }
-            else
-            {
-                time += mm;
-            }
-            time += ":";
-
-            if (ss < 10)
-            {
-                time += "0" + ss;
-            }
-            else
-            {
-                time += ss;
-            }
-
-            //update txtTime
-            txtTime.Text = time;
-        }
 
         //
 
         //toiminnallisuuksien asettaminen
+
+        #region Lights
+
         private void btnOlohuonePois_Click(object sender, RoutedEventArgs e)
         {
             OloHuone.SwitchOff();
@@ -182,14 +176,17 @@ namespace ÄlytaloWpfJM
             txtKeittiöValo.Background = Brushes.Azure;
             speechSynthesizer.Speak("KITCHEN " + txtKeittiöValo.Text);
         }
+        #endregion
 
+        #region Sauna
         private void btnSaunaTila_Click(object sender, RoutedEventArgs e)
         {
             if (HouseSauna.Switched)
             {
                 HouseSauna.SaunaPäällä(0);
+                SaunaTimer.Stop();
+                SaunaSammutusTimer.Start();
                 txtSaunaTila.Text = "SAUNA HEAT OFF";
-                //Sauna.Timer.Stop();
                 //lblLampotila
                 txtSaunaTila.Background = Brushes.Silver;
                 txtSaunaTila.Foreground = Brushes.BlueViolet;
@@ -198,6 +195,7 @@ namespace ÄlytaloWpfJM
             else
             {
                 HouseSauna.SaunaPäällä(1);
+                SaunaTimer.Start();
                 txtSaunaTila.Text = "SAUNA HEAT ON";
                 txtSaunaTila.Background = Brushes.MistyRose;
                 txtSaunaTila.Foreground = Brushes.Red;
@@ -205,6 +203,70 @@ namespace ÄlytaloWpfJM
             }
         }
 
+        private void Lämpenee3_Tick(object sender, EventArgs e)
+        {
+            HouseSauna.Deg = HouseSauna.Deg + 1;
+            Thread.Sleep(1000);
+            lblSaunaHeat.Content = HouseSauna.Deg + Astemerkki;
+
+            if (HouseSauna.Deg > 99)
+            {
+                txtSaunaTila.AppendText("SAUNA LÄMMIN");
+                asteTimer3.Stop();
+            }
+        }
+        private void Lämpenee2_Tick(object sender, EventArgs e)
+        {
+            HouseSauna.Deg = HouseSauna.Deg + 1;
+            Thread.Sleep(1000);
+            lblSaunaHeat.Content = HouseSauna.Deg + Astemerkki;
+
+            if (HouseSauna.Deg > 79)
+            {
+                txtSaunaTila.Text = String.Empty;
+                txtSaunaTila.AppendText("SAUNA LÄMMIN");
+                asteTimer2.Stop();
+            }
+        }
+        private void Lämpenee_Tick(object sender, EventArgs e)
+        {
+            //Kello on määritetty tikkaamaan sekunnin välein, joka on muunnettu sleepillä, että tikki kestää 2.0sek. Myös lämpötila celsius ilmoitettu.
+            HouseSauna.Deg = HouseSauna.Deg + 1;
+            Thread.Sleep(1000);
+            lblSaunaHeat.Content = HouseSauna.Deg + Astemerkki;
+
+            //Määrittää saunan lämpötilan pysähtymisen
+            if (HouseSauna.Deg > 59)
+            {
+                txtSaunaTila.Text = String.Empty;
+                txtSaunaTila.AppendText("SAUNA LÄMMIN");
+                asteTimer.Stop();
+            }
+        }
+
+        private void SaunanLampo_Tick(object sender, EventArgs e)
+        {
+            if (HouseSauna.SaunaTemperature > 60)
+            {
+                SaunaTimer.Stop();
+            }
+            HouseSauna.SaunaTemperature = HouseSauna.SaunaTemperature + 1.00;
+            lblSaunaHeat.Content = HouseSauna.SaunaTemperature.ToString() + Astemerkki;
+        }
+
+        private void SaunanSammutus_Tick(object sender, EventArgs e)
+        {
+            if (HouseSauna.SaunaTemperature < 20)
+            {
+                SaunaSammutusTimer.Stop();
+            }
+            HouseSauna.SaunaTemperature = HouseSauna.SaunaTemperature - 0.50;
+            lblSaunaHeat.Content = HouseSauna.SaunaTemperature.ToString() + Astemerkki;
+        }
+
+        #endregion
+
+        #region Thermostat
         private void btnAsetaLämpötila_Click(object sender, RoutedEventArgs e)
         {
             int Tavoitelämpötila;
@@ -214,7 +276,7 @@ namespace ÄlytaloWpfJM
 
                 if ((Tavoitelämpötila >= 15) && (Tavoitelämpötila < 40))
 
-                HouseHeat.SetTemp(Tavoitelämpötila);
+                    HouseHeat.SetTemp(Tavoitelämpötila);
                 txtLämpötila.Text = HouseHeat.Temperature.ToString() + Astemerkki;
                 txtTavoitelämpötila.Text = "";
                 speechSynthesizer.Speak("NEW TEMPERATURE " + txtLämpötila.Text);
@@ -226,31 +288,79 @@ namespace ÄlytaloWpfJM
                 speechSynthesizer.Speak(txtTavoitelämpötila.Text);
             }
         }
+
+        private void btnMinus_Click(object sender, RoutedEventArgs e)
+        {
+            j--;
+            string s = j.ToString();
+            txtTavoitelämpötila.Text = (s);
+        }
+
+        private void btnPlus_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            j++;
+            string s = j.ToString();
+            txtTavoitelämpötila.Text = (s);
+
+        }
+
+
+        #endregion
+
         private void btnTyhjennäTeksti_Click(object sender, RoutedEventArgs e)
+        {
+            txtTavoitelämpötila.Clear();
+        }
+
+
+
+
+        private void dtClockTime_Tick(object sender, EventArgs e)
+        {
+            lblClockTime.Content = DateTime.Now.ToLongTimeString();
+        }
+
+        #region Video
+        void mediaPlay(Object sender, EventArgs e)
+        {
+            myMedia.Play();
+        }
+
+        void mediaPause(Object sender, EventArgs e)
+        {
+            myMedia.Pause();
+        }
+
+        void mediaMute(Object sender, EventArgs e)
+        {
+
+            if (myMedia.Volume == 100)
             {
-                txtTavoitelämpötila.Clear();
+                myMedia.Volume = 0;
+                muteButt.Content = "Listen";
             }
-
-        private void txtAika_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            txtAika.Text = date1.ToString();
+            else
+            {
+                myMedia.Volume = 100;
+                muteButt.Content = "Mute";
+            }
         }
 
-        private void t_Tick(object sender, ContextMenuEventArgs e)
-        {
-
-        }
+        #endregion
     }
 }
 
-      
-
-  
 
 
 
 
 
-        
-    
+
+
+
+
+
+
 
