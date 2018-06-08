@@ -349,6 +349,16 @@ namespace ÄlytaloWpfJM
         }
 
         #endregion
+
+        private void sldOlohuone_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void sldKeittio_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }
 

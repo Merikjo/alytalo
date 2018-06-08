@@ -18,10 +18,21 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
+
+        <Rectangle Fill="#FFD6D6DE" HorizontalAlignment="Left" Height="387" Margin="23,529,0,0" StrokeThickness="15" VerticalAlignment="Top" Width="684">
+            <Rectangle.Stroke>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#FF7C7C7C"/>
+                </LinearGradientBrush>
+            </Rectangle.Stroke>
+        </Rectangle>
         <Rectangle Fill="#FFB2B2BF" HorizontalAlignment="Left" Height="296" Margin="40,69,0,0" Stroke="Black" VerticalAlignment="Top" Width="286"/>
 
-        <Rectangle Height="315" Margin="517,60,0,0" VerticalAlignment="Top" Width="174" HorizontalAlignment="Left" StrokeThickness="15">
+        <Rectangle Height="388" Margin="519,60,0,0" VerticalAlignment="Top" Width="174" HorizontalAlignment="Left" StrokeThickness="15">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -38,7 +49,7 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <Rectangle HorizontalAlignment="Left" Height="315" Margin="340,60,0,0" VerticalAlignment="Top" Width="174" StrokeThickness="15" Fill="#FFD6D6DE">
+        <Rectangle HorizontalAlignment="Left" Height="388" Margin="340,60,0,0" VerticalAlignment="Top" Width="174" StrokeThickness="15" Fill="#FFD6D6DE">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF7C7C7C" Offset="1"/>
@@ -48,7 +59,7 @@
             </Rectangle.Stroke>
         </Rectangle>
 
-        <Rectangle HorizontalAlignment="Left" Height="315" Margin="23,60,0,0" VerticalAlignment="Top" Width="315" StrokeThickness="15" Fill="#FFD6D6DE">
+        <Rectangle HorizontalAlignment="Left" Height="388" Margin="23,60,0,0" VerticalAlignment="Top" Width="315" StrokeThickness="15" Fill="#FFD6D6DE">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -65,7 +76,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TextBox x:Name="txtOlohuoneValo" HorizontalAlignment="Left" Height="45" Margin="51,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Ebrima" FontWeight="Bold">
+        <TextBox x:Name="txtOlohuoneValo" HorizontalAlignment="Left" Height="45" Margin="51,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Ebrima" FontWeight="Bold"  Text="{Binding Value, ElementName=sldOlohuone, StringFormat=0.0}" >
             <TextBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0.004"/>
@@ -131,7 +142,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TextBox x:Name="txtKeittiöValo" HorizontalAlignment="Left" Height="45" Margin="185,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontWeight="Bold">
+        <TextBox x:Name="txtKeittiöValo" HorizontalAlignment="Left" Height="45" Margin="185,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontWeight="Bold" Text="{Binding Value, ElementName=sldKeittio, StringFormat=0.0}">
             <TextBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -156,7 +167,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TextBox x:Name="txtLämpötila" HorizontalAlignment="Left" Height="45" Margin="539,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Background="#FFF3F3F3" FontSize="21.333" FontWeight="Bold" RenderTransformOrigin="0.777,0.511">
+        <TextBox x:Name="txtLämpötila" HorizontalAlignment="Left" Height="45" Margin="540,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Background="#FFF3F3F3" FontSize="21.333" FontWeight="Bold" RenderTransformOrigin="0.777,0.511">
             <TextBox.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -170,9 +181,9 @@
                 </LinearGradientBrush>
             </TextBox.Foreground>
         </TextBox>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Height="15" Margin="543,81,0,0" TextWrapping="Wrap" Text="TALON LÄMPÖTILA" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="0" Margin="636,216,0,0" VerticalAlignment="Top" Width="5"/>
-        <Button x:Name="btnAsetaLämpötila" Content="ASETA LÄMPÖTILA" HorizontalAlignment="Left" Height="45" Margin="539,161,0,0" VerticalAlignment="Top" Width="130" Foreground="White" FontWeight="Bold" Click="btnAsetaLämpötila_Click">
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Height="15" Margin="544,86,0,0" TextWrapping="Wrap" Text="TALON LÄMPÖTILA" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="0" Margin="637,221,0,0" VerticalAlignment="Top" Width="5"/>
+        <Button x:Name="btnAsetaLämpötila" Content="ASETA LÄMPÖTILA" HorizontalAlignment="Left" Height="45" Margin="540,166,0,0" VerticalAlignment="Top" Width="130" Foreground="White" FontWeight="Bold" Click="btnAsetaLämpötila_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -186,39 +197,50 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TextBox x:Name="txtTavoitelämpötila" HorizontalAlignment="Left" Height="45" Margin="539,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
-        <Button x:Name="btnTyhjennäTeksti" Content="TYHJENNÄ TEKSTI" HorizontalAlignment="Left" Height="27" Margin="539,261,0,0" VerticalAlignment="Top" Width="130" Click="btnTyhjennäTeksti_Click" Foreground="White"/>
+        <TextBox x:Name="txtTavoitelämpötila" HorizontalAlignment="Left" Height="45" Margin="540,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
+        <Button x:Name="btnTyhjennäTeksti" Content="TYHJENNÄ TEKSTI" HorizontalAlignment="Left" Height="27" Margin="540,266,0,0" VerticalAlignment="Top" Width="130" Click="btnTyhjennäTeksti_Click" Foreground="White"/>
 
         <Label x:Name="lblSaunaHeat" Content="" HorizontalAlignment="Left" Height="45" Margin="361,160,0,0" VerticalAlignment="Top" Width="130" FontSize="20" FontWeight="Bold" Background="#FFBFB6B6"/>
-        <Button x:Name="btnPlus" Content="+" HorizontalAlignment="Left" Height="27" Margin="543,304,0,0" VerticalAlignment="Top" Width="34" Background="#FF6E6565" FontWeight="Bold" FontSize="20" Click="btnPlus_Click"/>
-        <Button x:Name="btnMinus" Content="-" HorizontalAlignment="Left" Height="27" Margin="624,304,0,0" VerticalAlignment="Top" Width="31" Background="#FF6E6565" FontWeight="Bold" FontSize="20" Click="btnMinus_Click"/>
-        <Slider x:Name="sldOlohuone" HorizontalAlignment="Left" Height="23" Margin="46,398,0,0" VerticalAlignment="Top" Width="135"/>
-        <Slider x:Name="sldKeittio" HorizontalAlignment="Left" Margin="186,398,0,0" VerticalAlignment="Top" Width="129" Height="18">
-            <Slider.DataContext>
-                <local:Lights/>
-            </Slider.DataContext>
+        <Button x:Name="btnPlus" Content="+" HorizontalAlignment="Left" Height="27" Margin="544,309,0,0" VerticalAlignment="Top" Width="34" Background="#FF6E6565" FontWeight="Bold" FontSize="20" Click="btnPlus_Click"/>
+        <Button x:Name="btnMinus" Content="-" HorizontalAlignment="Left" Height="27" Margin="625,309,0,0" VerticalAlignment="Top" Width="31" Background="#FF6E6565" FontWeight="Bold" FontSize="20" Click="btnMinus_Click"/>
+        <Slider x:Name="sldOlohuone" HorizontalAlignment="Left" Height="23" Margin="46,398,0,0" VerticalAlignment="Top" Width="135" Minimum="0" Maximum="100" ValueChanged="sldOlohuone_ValueChanged" LargeChange="10" SmallChange="1" BindingGroup="{Binding Value, ElementName=sldOlohuone}"/>
+        <Slider x:Name="sldKeittio" HorizontalAlignment="Left" Margin="186,398,0,0" VerticalAlignment="Top" Width="129" Height="18" Minimum="0" Maximum="100" ValueChanged="sldKeittio_ValueChanged" LargeChange="10" SmallChange="1" BindingGroup="{Binding Value, ElementName=sldKeittio}">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-2.437"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.357"/>
+                </TransformGroup>
+            </Slider.RenderTransform>
         </Slider>
-        <Label x:Name="lblClockTime" Content="" HorizontalAlignment="Right" Margin="0,304,401,120" VerticalAlignment="Center" Width="128" FontSize="20" Height="45" Background="#FFBFB7B7" Foreground="White" RenderTransformOrigin="-0.195,0.533"/>
+
+
+        <Label x:Name="lblClockTime" Content="" HorizontalAlignment="Right" Margin="0,291,401,1133" VerticalAlignment="Center" Width="128" FontSize="20" Height="45" Background="#FFE8E0E0" Foreground="White" RenderTransformOrigin="-0.195,0.533"/>
+
+
+
+
 
 
 
         <StackPanel HorizontalAlignment = "Center" VerticalAlignment = "Center">
+
             <MediaElement x:Name = "myMedia" Source = "D:\VisualStudio2017\Images\FishMovie.mp4"
+
             LoadedBehavior = "Manual" Width = "591" Height = "274" />
+
             <StackPanel Orientation = "Horizontal" Margin = "0,10,0,0">
+
                 <Button Content = "Play" Margin = "0,0,10,0" Padding = "5" Click = "mediaPlay" />
+
                 <Button Content = "Pause" Margin = "0,0,10,0" Padding = "5" Click = "mediaPause" />
+
                 <Button x:Name = "muteButt" Content = "Mute" Padding = "5" Click = "mediaMute" />
+
             </StackPanel>
+
         </StackPanel>
-        <Button x:Name="btnSaunaTila_Copy" Content="SAUNA ON / OFF" HorizontalAlignment="Left" Height="45" Margin="361,204,0,0" VerticalAlignment="Top" Width="130" IsDefault="True" Click="btnSaunaTila_Click" Foreground="White" FontWeight="Bold">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0"/>
-                    <GradientStop Color="#FFE6EDF1" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
 
 
     </Grid>
